@@ -176,7 +176,7 @@ module ActiveMerchant #:nodoc:
         end
 
         def first_digits(number)
-          number.slice(0,6)
+          number.slice(0, 6)
         end
 
         def last_digits(number)

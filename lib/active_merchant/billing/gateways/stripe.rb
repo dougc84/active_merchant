@@ -106,17 +106,18 @@ module ActiveMerchant #:nodoc:
           return Response.new(false, direct_bank_error)
         end
 
-        MultiResponse.run do |r|
-          if payment.is_a?(ApplePayPaymentToken)
-            r.process { tokenize_apple_pay_token(payment) }
-            payment = StripePaymentToken.new(r.params['token']) if r.success?
-          end
-          r.process do
-            post = create_post_for_auth_or_purchase(money, payment, options)
-            post[:card][:processing_method] = 'quick_chip' if quickchip_payment?(payment)
-            commit(:post, 'charges', post, options)
-          end
-        end.responses.last
+        binding.pry_remote
+#        MultiResponse.run do |r|
+#          if payment.is_a?(ApplePayPaymentToken)
+#            r.process { tokenize_apple_pay_token(payment) }
+#            payment = StripePaymentToken.new(r.params['token']) if r.success?
+#          end
+#          r.process do
+#            post = create_post_for_auth_or_purchase(money, payment, options)
+#            post[:card][:processing_method] = 'quick_chip' if quickchip_payment?(payment)
+#            commit(:post, 'charges', post, options)
+#          end
+#        end.responses.last
       end
 
       def capture(money, authorization, options = {})
